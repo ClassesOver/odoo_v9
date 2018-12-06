@@ -4,7 +4,7 @@
 
 **属性**
 
-* jobs
+* **jobs**
 
 任务单元数组容器，job就是模块载入的任务单元，具体的 job 结构如下\(与define函数参数可以进行对比\)：
 
@@ -16,31 +16,50 @@
 }
 ```
 
-* job\_names
+* **job\_names**
 
 任务单元名称数组容器，维护就是定义各个模块的名字`moduleName`。
 
-* job\_deps
+* **job\_deps**
 
 任务单元依赖数组容器，具体结构如下:
 
-
-
-* job\_deferred
-
-
-
-* factories
-
-定义
-
-```js
-Object.create(null);
+```
+{  
+   from:dep,
+   to:moduleName
+}
 ```
 
-这里创建了继承关系的空对象，没有上层原型，只是一个维护着odoo的具体各个模块定义函数的对象。
+* **job\_deferred**
+
+* **factories**
+
+模块定义的对象容器，基于源码的字面意思，我们下文所称的模块工厂函数就是我们的模块定义函数。
+
+```js
+ var factories = Object.create(null);
+```
+
+这里创建了没有继承关系的空对象，没有上层Object原型，仅仅是一个维护着具体各个模块定义函数对象属性`{moduleName:  factory}`，下面可以看到具体的结构。
 
 ![](/assets/boot_factories.png)
+
+* **services**
+
+所谓
+
+
+
+```
+var services = Object.create({
+        qweb: new QWeb2.Engine(),
+        $: $,
+        _: _,
+});
+```
+
+
 
 **函数**
 
