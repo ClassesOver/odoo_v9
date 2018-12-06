@@ -47,7 +47,7 @@
 
 * **services**
 
-所谓的服务就是我们模块所暴露的对外的接口\(可以require\)，从代码上将就是模块定义函数执行返回的结果，我们实际require的就是从services池对象来pick出我们所需的依赖。
+所谓的服务就是我们模块所暴露的对外的接口\(可以require\)，从代码上将就是模块定义函数执行返回的结果，我们实际require的就是从services对象来pick出我们所需的依赖。
 
 ```
 var services = Object.create({
@@ -57,7 +57,7 @@ var services = Object.create({
 });
 ```
 
-这里以`{ qweb: new QWeb2.Engine(), $: $, _: _,}`原型创建了services，姑且简单点说就是继承这个对象。
+这里以`{ qweb: new QWeb2.Engine(), $: $, _: _,}`原型创建了services，姑且简单点说就是继承这个对象，可直接require。
 
 我们看下require的真面目：
 
@@ -79,11 +79,11 @@ var services = Object.create({
     }
 ```
 
-导入一个模块视为一个job，会先从 service 池中先导入所依赖的模块服务。
-
 备注：
 
-`_.pick(object, *keys)`该函数可以选择属性完成services对象的深拷贝。
+`_.pick(object, *keys)`该函数可以选择属性完成services对象的拷贝。
+
+![](/assets/boot_pick_services.png)
 
 **函数**
 
