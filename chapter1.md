@@ -79,11 +79,11 @@ var services = Object.create({
     }
 ```
 
-导入
+导入一个模块视为一个job，会先从 service 池中先导入所依赖的模块服务。
 
 备注：
 
-`_.pick(object, *keys) `这函数可以选择属性完成对象的拷贝。
+`_.pick(object, *keys)`该函数可以选择属性完成services对象的深拷贝。
 
 **函数**
 
