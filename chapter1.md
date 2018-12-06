@@ -47,19 +47,40 @@
 
 * **services**
 
-所谓
-
-
+所谓的服务就是我们模块所暴露的对外的接口\(可以require\)，从代码上将就是模块定义函数执行返回的结果，我们实际require的就是从services池对象来pick出我们所需的依赖。
 
 ```
 var services = Object.create({
-        qweb: new QWeb2.Engine(),
-        $: $,
-        _: _,
+    qweb: new QWeb2.Engine(),
+    $: $,
+    _: _,
 });
+
 ```
 
+这里以`{ qweb: new QWeb2.Engine(), $: $, _: _,}`原型创建了services，姑且简单点说就是继承这个对象。
 
+我们看下require的真面目：
+
+```
+    function make_require (job) {
+        var deps = _.pick(services, job.deps);
+
+        function require (name) {
+            if (!(name in deps)) {
+                console.error('Undefined dependency: ', name);
+            } else {
+                require.__require_calls++;
+            }
+            return deps[name];
+        }
+
+        require.__require_calls = 0;
+        return require;
+    }
+```
+
+备注
 
 **函数**
 
