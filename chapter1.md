@@ -55,7 +55,6 @@ var services = Object.create({
     $: $,
     _: _,
 });
-
 ```
 
 这里以`{ qweb: new QWeb2.Engine(), $: $, _: _,}`原型创建了services，姑且简单点说就是继承这个对象。
@@ -80,7 +79,11 @@ var services = Object.create({
     }
 ```
 
-备注
+导入
+
+备注：
+
+`_.pick(object, *keys) `这函数可以选择属性完成对象的拷贝。
 
 **函数**
 
