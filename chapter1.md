@@ -6,15 +6,33 @@
 
 * jobs
 
-数组
+任务单元数组容器，job就是模块载入的任务单元，具体的 job 结构如下\(与define函数参数可以进行对比\)：
+
+```
+{
+    name: name, // moduleName
+    factory: factory, // function(require)
+    deps: deps, // dependencies
+}
+```
 
 * job\_names
 
+任务单元名称数组容器，维护就是定义各个模块的名字`moduleName`。
+
 * job\_deps
+
+任务单元依赖数组容器，具体结构如下:
+
+
 
 * job\_deferred
 
+
+
 * factories
+
+定义
 
 ```js
 Object.create(null);
@@ -56,9 +74,9 @@ _**func  **_这个参数具体定义这个模块，返回的值就是模块的�
             }
 ```
 
-备注: 
+备注:
 
 `Array.prototype.shift()` 内建数组方法，移除并返回数组的第一个元素。
 
-`_.uniqueId([prefix]) `underscore 生成以prefix为前缀的唯一Id。
+`_.uniqueId([prefix])`underscore 生成以prefix为前缀的唯一Id。
 
