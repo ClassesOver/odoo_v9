@@ -57,11 +57,11 @@ odoo的define定义的过程可理解为解析成任务单元，并压入数组�
 
 所谓的服务就是我们模块所暴露的对外的接口\(可以require\)，从代码上将就是模块定义函数执行返回的结果，我们实际require的就是从services对象来pick出我们所需的依赖。
 
-```
+```js
 var services = Object.create({
     qweb: new QWeb2.Engine(),
     $: $,
-    _: _,
+    _: _,    
 });
 ```
 
@@ -69,22 +69,22 @@ var services = Object.create({
 
 我们看下require的真面目：
 
-```
-    function make_require (job) {
-        var deps = _.pick(services, job.deps);
+```js
+function make_require (job) {
+    var deps = _.pick(services, job.deps);
 
-        function require (name) {
-            if (!(name in deps)) {
-                console.error('Undefined dependency: ', name);
-            } else {
-                require.__require_calls++;
-            }
-            return deps[name];
+    function require (name) {
+        if (!(name in deps)) {
+            console.error('Undefined dependency: ', name);
+        } else {
+            require.__require_calls++;
         }
-
-        require.__require_calls = 0;
-        return require;
+        return deps[name];
     }
+
+    require.__require_calls = 0;
+    return require;
+}
 ```
 
 备注：
@@ -103,26 +103,26 @@ _**dependencies** _参数是可选的，这个是一个数组来声明在模块�
 
 _**func  **_这个参数具体定义这个模块，返回的值就是模块的值，javascript存在全局和函数作用域，无块级作用域\(ES 6新增块级\)，因此通过函数作用域达到模块命名空间的效果。
 
-```
-        define: function () {
-            // 将 arguments 类数组对象转化为数组对象，转化为数组就可以利用数组的便利方法
-            var args = Array.prototype.slice.call(arguments); 
-            // 判断第一个参数是否为字符串
-            var name = typeof args[0] === 'string' ? args.shift() : _.uniqueId('__job'); 
-            // 获取最后一个参数也就我们定义的function
-            var factory = args[args.length - 1];
-            var deps;
-            // 这里是对模块依赖的判断，若第二参数定义了依赖就不会从工厂函数中抽取所需的依赖。
-            if (args[0] instanceof Array) {
-                deps = args[0];
-            } else {
-                deps = [];
-                factory.toString()
-                    .replace(commentRegExp, '')
-                    .replace(cjsRequireRegExp, function (match, dep) {
-                        deps.push(dep);
-                    });
-            }
+```js
+define: function () {
+    // 将 arguments 类数组对象转化为数组对象，转化为数组就可以利用数组的便利方法
+    var args = Array.prototype.slice.call(arguments); 
+    // 判断第一个参数是否为字符串
+    var name = typeof args[0] === 'string' ? args.shift() : _.uniqueId('__job'); 
+    // 获取最后一个参数也就我们定义的function
+    var factory = args[args.length - 1];
+    var deps;
+    // 这里是对模块依赖的判断，若第二参数定义了依赖就不会从工厂函数中抽取所需的依赖。
+    if (args[0] instanceof Array) {
+        deps = args[0];
+    } else {
+        deps = [];
+        factory.toString()
+            .replace(commentRegExp, '')
+            .replace(cjsRequireRegExp, function (match, dep) {
+                deps.push(dep);
+            });
+    }
 ```
 
 备注:
@@ -133,5 +133,26 @@ _**func  **_这个参数具体定义这个模块，返回的值就是模块的�
 
 * `progress_jobs(jobs,services)`
 
+处理模块加载任务单元，有两个调用的入口：
 
+1. `define` 函数
+2. `progress_job `函数
+
+具体看下函数体:
+
+```js
+    ...
+    function is_ready (job) {
+        return !job.error && !job.rejected && _.every(job.factory.deps, function (name) { return name in services; });
+    }
+    ...
+
+    while (jobs.length && (job = _.find(jobs, is_ready))) {
+        process_job(job);
+    }
+    
+    ...
+```
+
+备注
 
