@@ -191,9 +191,9 @@ define: function () {
 
 job.factory 就是我们的模块定义函数，call方法可以运行时绑定“this”函数赖以执行的上下文，null表示全局。
 
-备注
+备注：
 
+`$.when( deferreds ) `接收一个延时对象，返回一个promise对象（deferred对象的子集），可以为其添加成功和失败等回调函数。
 
-
-
+然而
 
