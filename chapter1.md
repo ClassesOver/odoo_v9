@@ -136,7 +136,9 @@ define: function () {
 处理模块加载任务单元，有两个调用的入口：
 
 1. `define` 函数
-2. `progress_job `函数
+2. `progress_job`函数
+
+我们在定义模块的
 
 具体看下函数体:
 
@@ -150,7 +152,7 @@ define: function () {
     while (jobs.length && (job = _.find(jobs, is_ready))) {
         process_job(job);
     }
-    
+
     ...
 ```
 
