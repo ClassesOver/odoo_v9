@@ -162,7 +162,5 @@ define: function () {
 
 * `progress_job(job)`
 
-这个
-
-
+调用了就绪了的我们的模块定义函数。
 
