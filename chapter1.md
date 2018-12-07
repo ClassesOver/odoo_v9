@@ -41,6 +41,8 @@ odoo的define定义的过程可理解为解析成任务单元，并压入数组�
 
 * **job\_deferred**
 
+延时
+
 * **factories**
 
 模块定义的对象容器，基于源码的字面意思，我们下文所称的模块工厂函数就是我们的模块定义函数。
@@ -193,7 +195,15 @@ job.factory 就是我们的模块定义函数，call方法可以运行时绑定�
 
 备注：
 
-`$.when( deferreds ) `接收一个延时对象，返回一个promise对象（deferred对象的子集），可以为其添加成功和失败等回调函数。
+`$.when( deferreds )`接收一个延时对象，返回一个promise对象（deferred对象的子集），可以为其添加成功和失败等回调函数。
 
-然而
+然而大多数情况下执行返回的结果`job_exec`单纯就是一个对象，这个时候`$.when`返回就是“resolved”状态的promise对象，这意味会执行`then`中的`success`回调。
+
+真相如下：
+
+![](/assets/jobs_exec_resolved.png)
+
+这里还可能有点疑惑的是`var def = $.Deferred()`是干什么的，由源码可知，`job_exec`不管成功和失败都被resolve了，其实这个延时对象，源码下文为其添加了用来输出日志的回调函数。
+
+
 
