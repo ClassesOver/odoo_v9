@@ -158,7 +158,11 @@ define: function () {
 
 备注：
 
-`_.every(list, [predicate], [context]) `这个list数组其中一个被迭代为false就会直接短路返回false。
+`_.every(list, [predicate], [context])`这个list数组其中一个被迭代为false就会直接短路返回false。
+
+* `progress_job(job)`
+
+这个
 
 
 
