@@ -41,7 +41,7 @@ odoo的define定义的过程可理解为解析成任务单元，并压入数组�
 
 * **job\_deferred**
 
-延时
+延时对象数组，一个job对应一个deferred对象，用于异步输出模块加载的日志。
 
 * **factories**
 
@@ -204,6 +204,4 @@ job.factory 就是我们的模块定义函数，call方法可以运行时绑定�
 ![](/assets/jobs_exec_resolved.png)
 
 这里还可能有点疑惑的是`var def = $.Deferred()`是干什么的，由源码可知，`job_exec`不管成功和失败都被resolve了，其实这个延时对象，源码下文为其添加了用来输出日志的回调函数。
-
-
 
