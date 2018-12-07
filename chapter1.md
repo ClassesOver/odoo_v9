@@ -164,3 +164,36 @@ define: function () {
 
 调用了就绪了的我们的模块定义函数。
 
+```js
+    var def = $.Deferred(); // 延时对象，类似promise，是jquery是为函数添加回调函数的一种解决方案。
+    try {
+        job_exec = job.factory.call(null, require); // job_exec是执行返回的结果
+        jobs.splice(jobs.indexOf(job), 1);
+        job_deferred.push(def);
+    } catch (e) {
+        job.error = e;
+    }
+    if (!job.error) {
+        $.when(job_exec).then(
+            function (data) {
+                services[job.name] = data; // success 将其返回的结果添加到services对象上，属性名为模块名字。
+                def.resolve(); // 延时对象被处理
+                odoo.process_jobs(jobs, services);
+            }, function (e) {
+                job.rejected = e || true;
+                jobs.push(job); // 失败重新加入我们的jobs的数组中
+                def.resolve(); //延时对象也被处理
+
+            }
+        );
+    }
+```
+
+job.factory 就是我们的模块定义函数，call方法可以运行时绑定“this”函数赖以执行的上下文，null表示全局。
+
+备注
+
+
+
+
+
