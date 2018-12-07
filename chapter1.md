@@ -138,9 +138,9 @@ define: function () {
 1. `define` 函数
 2. `progress_job`函数
 
-我们在定义模块的
+我们在定义模块的时候会调用`progress_jobs`这个函数，但我们模块的依赖未就绪，就会直接返回缓存到我们的jobs数组中，反之就会`progress_job`在递归调用`progress_jobs`直到处理完毕。
 
-具体看下函数体:
+具体看下主函数体:
 
 ```js
     ...
@@ -156,5 +156,9 @@ define: function () {
     ...
 ```
 
-备注
+备注：
+
+`_.every(list, [predicate], [context]) `这个list数组其中一个被迭代为false就会直接短路返回false。
+
+
 
