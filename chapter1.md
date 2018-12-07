@@ -1,8 +1,14 @@
 # Boot
 
-该文件定义了Odoo的模块系统，需要首先被加载，整体结构是一个立即执行函数，通过window全局对象来暴露在函数定义的私有内部变量`var odoo = window.odoo`。
+该文件定义了Odoo的模块系统，需要首先被加载，整体结构是一个立即执行函数。
 
-**属性**
+**全局属性**
+
+* **odoo**
+
+odoo是通过window（global）对象来暴露在函数内定义的变量成为全局变量来被外部访问，`var odoo = window.odoo`。
+
+**局部属性**
 
 * **jobs**
 
@@ -124,4 +130,8 @@ _**func  **_这个参数具体定义这个模块，返回的值就是模块的�
 `Array.prototype.shift()` 内建数组方法，移除并返回数组的第一个元素。
 
 `_.uniqueId([prefix])`underscore 生成以prefix为前缀的唯一Id。
+
+* `progress_jobs(jobs,services)`
+
+
 
