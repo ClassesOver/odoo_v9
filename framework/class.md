@@ -65,7 +65,7 @@ var fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
 ```
 
 该函数在`include`和`extend` 函数中都有用到，在给原型添加新增同名函数成员的时候，该函数会判断这个成员函数是否函数`_super的调用`。  
-在`extend`函数中，若存在就是在函数执行的时候，将原始的原型同名`_super[name]`函数在执行时绑定到`this._super`上，根据代码可知就是原始的`this.prototype`，这个`this`可能是`OdooClass`也可能是`Class`，两者都有extend方法：
+在`extend`函数中，若存在就是在函数执行的时候，将原始的原型同名`_super[name]`函数在执行时绑定到`this._super`上，根据代码可知就是原始的`this.prototype`，这个`this`可能是`OdooClass`也可能是`Class`，两者都有`extend`方法：
 
 ```js
     var tmp = this._super;
