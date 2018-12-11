@@ -79,7 +79,7 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 
 备注：
 
-`/\s+/ `该正则对象匹配多个空白字符。
+`/\s+/`该正则对象匹配多个空白字符。
 
 事件真正注册调用和触发的地方 **Events**，处理事件的分发，有三个重要的函数：on 、off 、trigger，不要直接使用和继承，相反使用 **EventDispatcherMixin**。
 
@@ -132,4 +132,10 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 ```
 
 每次off的时候，都会删除\_callbacks，然后除了off的事件回调外会重新注册所有回调。
+
+* `trigger(events)`
+
+这个会依次调用回调链中的函数，第一个参数是注册的事件名称，额外的参数会传入回调函数。
+
+
 
