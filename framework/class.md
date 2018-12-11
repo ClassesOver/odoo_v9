@@ -58,3 +58,41 @@ Class的extend和include静态方法关系图如下：
 
 `_.extend(destination, *sources)` 将source对象中的所有属性简单地覆盖到destination对象上。
 
+此外，还有一个比较刚开始没看懂的一个函数`fnTest`：
+
+```js
+var fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
+```
+
+该函数在`include`和`extend` 函数中都有用到，在给原型添加新增同名函数成员的时候，该函数会判断这个成员函数是否函数`_super的调用`。  
+在`extend`函数中，若存在就是在函数执行的时候，将原始的原型同名`_super[name]`函数在执行时绑定到`this._super`上，根据代码可知就是原始的`this.prototype`，这个`this`可能是`OdooClass`也可能是`Class`，两者都有extend方法：
+
+```js
+    var tmp = this._super;
+
+        // Add a new ._super() method that is the same
+        // method but on the super-class
+    this._super = _super[name];
+
+    // The method only need to be bound temporarily, so
+    // we remove it when we're done executing
+    var ret = fn.apply(this, arguments);
+    this._super = tmp;
+```
+
+在'include'函数中，与`extend`函数有些不同，`include `会修改创建原型对象，在`prototype[name]`被重新赋值前，`this._super`会绑定之前的`prototype[name]`：
+
+```js
+    prototype[name] = (function (name, fn, previous) {
+        return function () {
+            var tmp = this._super;
+            this._super = previous;
+            var ret = fn.apply(this, arguments);
+            this._super = tmp;
+            return ret;
+        };
+    })(name, properties[name], prototype[name]);
+```
+
+
+
