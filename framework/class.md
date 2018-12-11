@@ -1,4 +1,5 @@
-#Class
+# Class
+
 实现的Javascript的类继承，定义了`OdooClass`构造函数，用于生成`Class`的原型对象，`extend`函数用于初次（初始化）构建扩展我们的生成`Class`原型对象，`include`用于修改已经存在的目标原型对象\(`this._super`在具体目标函数执行的时候存放之前的原型同名函数属性\)。
 
 ```js
@@ -47,7 +48,13 @@ function OdooClass(){};
     });
 ```
 
-![](/assets/class.jpg)
+Class的继承关系图如下：  
+![](/assets/class.jpg)  
+Class的extend和include静态方法关系图如下：  
+![](/assets/class_extend_include.jpg)  
+备注:
 
+`Array.prototype.unshift(element,...)`用来向头部添加新的元素，不产生新的数组。
 
+`_.extend(destination, *sources)` 将source对象中的所有属性简单地覆盖到destination对象上。
 
