@@ -135,7 +135,23 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 
 * `trigger(events)`
 
+```js
+   rest = Array.prototype.slice.call(arguments, 1);
+    while ((node = events.pop())) {
+        tail = node.tail;
+        args = node.event ? [ node.event ].concat(rest) : rest;
+        while ((node = node.next) !== tail) {
+            node.callback.apply(node.context || this, args);
+        }
+    }
+```
+
 这个会依次调用回调链中的函数，第一个参数是注册的事件名称，额外的参数会传入回调函数。
 
+备注:
+
+`Array.prototype.concat() `这个函数常常用于合并两个或多个数组，并返回新的数组，不更改现有数组，该方法常常用于数组的克隆。
+
+  
 
 
