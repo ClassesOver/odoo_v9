@@ -2,9 +2,13 @@
 
 该模块定义并暴露出了**ParentedMixin**,  **EventDispatcherMixin**,  **PropertiesMixin** 三个Mixin对象。
 
-**ParentedMixin** 用来构造加入生命周期的特性，每一个对象可有一个父亲对象和多个孩子对象，当一个对象销毁的时候，其孩子也会销毁。
+### ParentedMixin
 
-**EventDispatcherMixin** 用于包含事件系统的特性，通过指定目标对象进行注册事件。事件发出对象和目标对象相互存储或引用着，这个用于当其一对象被销毁的时候来移除事件处理器。移除这个引用是必要的来避免内存泄漏和幽灵事件（向之前已经销毁的对象发送事件）。
+用来构造加入生命周期的特性，每一个对象可有一个父亲对象和多个孩子对象，当一个对象销毁的时候，其孩子也会销毁。
+
+### EventDispatcherMixin
+
+用于包含事件系统的特性，通过指定目标对象进行注册事件。事件发出对象和目标对象相互存储或引用着，这个用于当其一对象被销毁的时候来移除事件处理器。移除这个引用是必要的来避免内存泄漏和幽灵事件（向之前已经销毁的对象发送事件）。
 
 ```js
 var EventDispatcherMixin = _.extend({}, ParentedMixin, {
@@ -76,6 +80,20 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
     }
     });
 ```
+
+`trigger_up `函数用来将事件向上传播，类似于事件冒泡，子—&gt;父，其事件（OdooEvent）的`stop_propagation`并不影响事件的触发，OdooEvent是对普通event的简单封装，用于事件由内向外传播。其源码可见：
+
+```js
+  _trigger_up: function(event) {
+        var parent;
+        this.__edispatcherEvents.trigger(event.name, event);
+        if (!event.is_stopped() && (parent = this.getParent())) {
+             parent._trigger_up(event);
+        }
+  },
+```
+
+
 
 备注：
 
@@ -150,8 +168,7 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 
 备注:
 
-`Array.prototype.concat() `这个函数常常用于合并两个或多个数组，并返回新的数组，不更改现有数组，该方法常常用于数组的克隆。
+`Array.prototype.concat()`这个函数常常用于合并两个或多个数组，并返回新的数组，不更改现有数组，该方法常常用于数组的克隆。
 
-  
 
 
