@@ -94,6 +94,8 @@ var fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
     })(name, properties[name], prototype[name]);
 ```
 
-
+备注：
+`/\b_super\b/` 和 `/xyz/` 都是正则表达式，test（）用于匹配字符串是否匹配，传递一个函数将会先toString()方法来转化为字符串。
+`\b` 用于匹配左或右边界不包含**单词**字符。
 
 

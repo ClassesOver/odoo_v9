@@ -4,4 +4,5 @@
 * [Boot启动](boot.md)
 * [Framework](framework.md)
   * [Class](framework/class.md)
+  * [Mixins](framework/class/mixins.md)
 
