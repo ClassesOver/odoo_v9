@@ -80,7 +80,7 @@ var fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
     this._super = tmp;
 ```
 
-在'include'函数中，与`extend`函数有些不同，`include `会修改创建原型对象，在`prototype[name]`被重新赋值前，`this._super`会绑定之前的`prototype[name]`：
+在`include`函数中，与`extend`函数有些不同，`include`会修改创建原型对象，在`prototype[name]`被重新赋值前，`this._super`会绑定之前的`prototype[name]`：
 
 ```js
     prototype[name] = (function (name, fn, previous) {
@@ -93,6 +93,7 @@ var fnTest = /xyz/.test(function(){xyz();}) ? /\b_super\b/ : /.*/;
         };
     })(name, properties[name], prototype[name]);
 ```
+
 
 
 
