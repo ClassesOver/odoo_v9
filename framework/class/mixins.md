@@ -81,7 +81,7 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
     });
 ```
 
-`trigger_up `函数用来将事件向上传播，类似于事件冒泡，子—&gt;父，其事件（OdooEvent）的`stop_propagation`并不影响事件的触发，OdooEvent是对普通event的简单封装，用于事件由内向外传播。其源码可见：
+`trigger_up`函数用来将事件向上传播，类似于事件冒泡，子—&gt;父，其事件（OdooEvent）的`stop_propagation`并不影响事件的触发，OdooEvent是对普通event的简单封装，用于事件由内向外传播。其源码可见真相：
 
 ```js
   _trigger_up: function(event) {
@@ -92,8 +92,6 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
         }
   },
 ```
-
-
 
 备注：
 
@@ -169,6 +167,4 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 备注:
 
 `Array.prototype.concat()`这个函数常常用于合并两个或多个数组，并返回新的数组，不更改现有数组，该方法常常用于数组的克隆。
-
-
 
