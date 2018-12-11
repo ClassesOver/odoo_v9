@@ -77,7 +77,11 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
     });
 ```
 
+备注
+
 事件真正注册调用和触发的地方 **Events**，处理事件的分发，有三个重要的函数：on 、off 、trigger，不要直接使用和继承，相反使用 **EventDispatcherMixin**。
+
+* `on(events, callback, context)`
 
 ```js
     on : function(events, callback, context) {
@@ -98,4 +102,32 @@ var EventDispatcherMixin = _.extend({}, ParentedMixin, {
 \_classbacks 这个内部对象为每个注册的事件维护一个单向调用链表，每当注册一个回调函数，就会在尾部节点加入callback和context\(dest\)属性然后在尾部新增加一个节点，具体下图所示：
 
 ![](/assets/event_callbacks.jpg)
+
+* `off(events, callback, context)`
+
+```js
+    off : function(events, callback, context) {
+        var ev, calls, node;
+        if (!events) {
+            delete this._callbacks;
+        } else if ((calls = this._callbacks)) {
+            events = events.split(/\s+/);
+            while ((ev = events.shift())) {
+                node = calls[ev];
+                delete calls[ev];
+                if (!callback || !node)
+                    continue;
+                while ((node = node.next) && node.next) {
+                    if (node.callback === callback
+                            && (!context || node.context === context))
+                        continue;
+                    this.on(ev, node.callback, node.context);
+                }
+            }
+        }
+        return this;
+    }
+```
+
+每次off的时候，都会删除\_callbacks，然后除了off的事件回调外会重新注册所有回调。
 
