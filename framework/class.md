@@ -1,6 +1,5 @@
-# Core
-
-实现的Javascript的类继承，定义了Class对象。
+#Class
+实现的Javascript的类继承，定义了`OdooClass`构造函数，用于生成`Class`的原型对象，`extend`函数用于初次（初始化）构建扩展我们的生成`Class`原型对象，`include`用于修改已经存在的目标原型对象\(`this._super`在具体目标函数执行的时候存放之前的原型同名函数属性\)。
 
 ```js
 function OdooClass(){};
@@ -48,5 +47,7 @@ function OdooClass(){};
     });
 ```
 
-   
+![](/assets/class.jpg)
+
+
 
