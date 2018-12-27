@@ -1,8 +1,7 @@
 # Summary
 
 * [介绍](README.md)
-* [Boot启动](boot.md)
-* [Framework](framework.md)
-  * [Class](framework/class.md)
-  * [Mixins](framework/class/mixins.md)
+* [Boot](boot.md)
+* [Class](framework/class.md)
+* [Mixins](framework/class/mixins.md)
 
